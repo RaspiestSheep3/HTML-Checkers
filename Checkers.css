@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto Mono", serif; /* Font to use */
+    background-color: #201f23;
+}
+
+.header {
+    width: 100%;
+    padding: 10px;
+    min-height: 100px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+    font-size: 60px;
+    border: 3px solid #b5b2a6;
+    border-radius: 20px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;  /* Stack sections vertically */
+    justify-content: flex-start;  /* Align items to the top */
+    align-items: center;  /* Center items horizontally */
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;  /* Prevent unwanted scrolling */
+}
+
+.displayText {
+    color: #b5b2a6;
+}
+
+.board {
+    border: 10px solid #b5b2a6;
+    display: flex;
+    flex-direction: column;  /* Ensure the rows are stacked vertically */
+    margin-top: 50px;
+}
+
+.row {
+    display: flex;  /* Ensure the row acts as a flex container for alignment */
+}
+
+.row img {
+    display: block;  /* Prevents extra spacing caused by inline-block rendering */
+    margin: 0;  /* Remove all margin */
+    padding: 0;  /* Remove padding */
+}
+
+.cell {
+    width: 64px;
+    height: 64px; /* Define explicit height to prevent inconsistencies */
+    margin: 0; /* Remove any margin between cells */
+    padding: 0; /* Remove padding */
+}
+
+.turnDisplay {
+    margin-top: 20px; /* Ensure space between the board and the turn display */
+    text-align: center;
+    font-size: 40px;
+}
