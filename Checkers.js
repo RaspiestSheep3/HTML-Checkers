@@ -64,6 +64,7 @@ playerTurn = 1 //1 = White, 0 = Black
 grid = [];
 
 function GenerateGrid(){
+    grid = [];
     for(let i = 0; i < 8; i++){
         if(i<=2){
             if(i % 2 === 0) baseArray = [1, 0];
@@ -82,13 +83,99 @@ function GenerateGrid(){
     }
 }
 
+function CheckPieceJumps(pieceLocation){
+    let areasToJumpTo = [];
+
+    let targetPiece = grid[pieceLocation[0]][pieceLocation[1]]
+
+    if(targetPiece % 2 === 1){
+        //White 
+
+        //Forwards Right
+        if((pieceLocation[0] + 2 < 8) && (pieceLocation[1] + 2 < 8) && ((grid[pieceLocation[0] + 1][pieceLocation[1] + 1] + 1)% 2 === playerTurn) && ((grid[pieceLocation[0] + 1][pieceLocation[1] + 1]) !== 0) && (grid[pieceLocation[0] + 2][pieceLocation[1] + 2] === 0))
+        {
+            areasToJumpTo = areasToJumpTo.concat([[pieceLocation[0] + 2 , pieceLocation[1] + 2]]);
+            //console.log(`${pieceLocation[0] + 1} ${pieceLocation[1] + 1} ${grid[pieceLocation[0] + 1][pieceLocation[1] + 1]}`);
+        }
+
+        //Forwards Left
+        if((pieceLocation[0] + 2 < 8) && (pieceLocation[1] - 2 > -1) && ((grid[pieceLocation[0] + 1][pieceLocation[1] - 1] + 1)% 2 === playerTurn) && ((grid[pieceLocation[0] + 1][pieceLocation[1] - 1]) !== 0)  && (grid[pieceLocation[0] + 2][pieceLocation[1] - 2] === 0))
+        {
+            areasToJumpTo = areasToJumpTo.concat([[pieceLocation[0] + 2 , pieceLocation[1] - 2]]);
+            //console.log(`${pieceLocation[0] + 1} ${pieceLocation[1] - 1} ${grid[pieceLocation[0] + 1][pieceLocation[1] - 1]}`);
+        }
+
+        if(targetPiece === 3){
+            //White King
+
+            //Backwards Right
+            if((pieceLocation[0] - 2 > -1) && (pieceLocation[1] + 2 < 8) && ((grid[pieceLocation[0] - 1][pieceLocation[1] + 1] + 1)% 2 === playerTurn) && ((grid[pieceLocation[0] - 1][pieceLocation[1] + 1]) !== 0) && (grid[pieceLocation[0] - 2][pieceLocation[1] + 2] === 0))
+            {
+                areasToJumpTo = areasToJumpTo.concat([[pieceLocation[0] - 2 , pieceLocation[1] + 2]]);
+                //console.log(`${pieceLocation[0] + 1} ${pieceLocation[1] + 1} ${grid[pieceLocation[0] + 1][pieceLocation[1] + 1]}`);
+            }
+
+            //Backwards Left
+            if((pieceLocation[0] - 2 > -1) && (pieceLocation[1] - 2 > -1) && ((grid[pieceLocation[0] - 1][pieceLocation[1] - 1] + 1)% 2 === playerTurn) && ((grid[pieceLocation[0] - 1][pieceLocation[1] - 1]) !== 0)  && (grid[pieceLocation[0] - 2][pieceLocation[1] - 2] === 0))
+            {
+                areasToJumpTo = areasToJumpTo.concat([[pieceLocation[0] - 2 , pieceLocation[1] - 2]]);
+                //console.log(`${pieceLocation[0] + 1} ${pieceLocation[1] - 1} ${grid[pieceLocation[0] + 1][pieceLocation[1] - 1]}`);
+            }
+        }
+    }
+    else{
+        //Black
+
+        //Forwards Right
+        if((pieceLocation[0] - 2 > -1) && (pieceLocation[1] + 2 < 8) && ((grid[pieceLocation[0] - 1][pieceLocation[1] + 1] + 1)% 2 === playerTurn) && ((grid[pieceLocation[0] - 1][pieceLocation[1] + 1]) !== 0) && (grid[pieceLocation[0] - 2][pieceLocation[1] + 2] === 0))
+            { 
+                areasToJumpTo = areasToJumpTo.concat([[pieceLocation[0] - 2 , pieceLocation[1] + 2]]);
+                //console.log(`${pieceLocation[0] + 1} ${pieceLocation[1] + 1} ${grid[pieceLocation[0] + 1][pieceLocation[1] + 1]}`);
+            }
+
+            //Forwards Left
+            if((pieceLocation[0] - 2 > -1) && (pieceLocation[1] - 2 > -1) && ((grid[pieceLocation[0] - 1][pieceLocation[1] - 1] + 1)% 2 === playerTurn) && ((grid[pieceLocation[0] - 1][pieceLocation[1] - 1]) !== 0)  && (grid[pieceLocation[0] - 2][pieceLocation[1] - 2] === 0))
+            {
+                areasToJumpTo = areasToJumpTo.concat([[pieceLocation[0] - 2 , pieceLocation[1] - 2]]);
+                //console.log(`${pieceLocation[0] + 1} ${pieceLocation[1] - 1} ${grid[pieceLocation[0] + 1][pieceLocation[1] - 1]}`);
+            }
+        
+        if(targetPiece === 4)
+        {
+            //Black King
+
+            //Backwards Right
+            if((pieceLocation[0] + 2 < 8) && (pieceLocation[1] + 2 < 8) && ((grid[pieceLocation[0] + 1][pieceLocation[1] + 1] + 1)% 2 === playerTurn) && ((grid[pieceLocation[0] + 1][pieceLocation[1] + 1]) !== 0) && (grid[pieceLocation[0] + 2][pieceLocation[1] + 2] === 0))
+            {
+                areasToJumpTo = areasToJumpTo.concat([[pieceLocation[0] + 2 , pieceLocation[1] + 2]]);
+                //console.log(`${pieceLocation[0] + 1} ${pieceLocation[1] + 1} ${grid[pieceLocation[0] + 1][pieceLocation[1] + 1]}`);
+            }
+    
+            //Backwards Left
+            if((pieceLocation[0] + 2 < 8) && (pieceLocation[1] - 2 > -1) && ((grid[pieceLocation[0] + 1][pieceLocation[1] - 1] + 1)% 2 === playerTurn) && ((grid[pieceLocation[0] + 1][pieceLocation[1] - 1]) !== 0)  && (grid[pieceLocation[0] + 2][pieceLocation[1] - 2] === 0))
+            {
+                areasToJumpTo = areasToJumpTo.concat([[pieceLocation[0] + 2 , pieceLocation[1] - 2]]);
+                //console.log(`${pieceLocation[0] + 1} ${pieceLocation[1] - 1} ${grid[pieceLocation[0] + 1][pieceLocation[1] - 1]}`);
+            }
+        }
+    }
+
+    return areasToJumpTo;
+}
+
 //USER INPUT
-targetPieceLocation = null
-pieceGridPoint = null;
+var targetPieceLocation = null
+var pieceGridPoint = null;
+var movesThisTurn = 0;
+
+allowedJumpPositions = [];
+
 document.querySelector('.board').addEventListener('click', function(event) {
     // Check if the clicked element is a cell
+
     if (event.target.classList.contains('cell')) {
-        
+        allowedJumpPositions = [];
+
         // Get the id of the clicked cell
         let cellId = event.target.id;
         
@@ -97,10 +184,28 @@ document.querySelector('.board').addEventListener('click', function(event) {
         let gridPoint = grid[targetLocation[0]][targetLocation[1]];
 
 
+        //Generating list of jump moves that can be played across all pieces
+        for(let rowIndex = 0; rowIndex < 8; rowIndex++){
+            for(let columnIndex = 0; columnIndex < 8; columnIndex++){
+                if((grid[rowIndex][columnIndex] !== 0) && (grid[rowIndex][columnIndex] % 2 === playerTurn)){
+                    
+                    let pieceJumpPoints = CheckPieceJumps([rowIndex,columnIndex]);
+                    for(let pieceJumpPoint of pieceJumpPoints){
+                        //console.log(`JUMP ${JSON.stringify(pieceJumpPoints)} ${JSON.stringify(pieceJumpPoint)} ${Array.isArray(pieceJumpPoints)}`);
+                        allowedJumpPositions = allowedJumpPositions.concat([pieceJumpPoint]);
+                    }
+
+                }
+            }
+        }
+
+        console.log(`JUMPS ${JSON.stringify(allowedJumpPositions)}`);
+
         if((!(gridPoint === 0)) && (gridPoint % 2 === playerTurn)){
             //Setting target piece
             targetPieceLocation = targetLocation;
             pieceGridPoint = grid[targetPieceLocation[0]][targetPieceLocation[1]];
+
         }
 
         if((gridPoint === 0) && !(targetPieceLocation === null)){
@@ -126,14 +231,27 @@ document.querySelector('.board').addEventListener('click', function(event) {
                 }
             }
 
+            //Checking if jump moves can be done, and if so if target move is among them
+            if(allowedJumpPositions.length !== 0){
+                console.log("TESTING 1");
+
+                //Checks if targetLocation is in allowedJumpPositions - we have to stringify because JS works off reference in memory, not content
+                let isArrayPresent = allowedJumpPositions.some(arr => JSON.stringify(arr) === JSON.stringify(targetLocation));
+                if(isArrayPresent === false){
+                    console.log(`TESTING 2 ${JSON.stringify(targetLocation)}`);
+                    turnValid = false;
+                }
+            }
+
             if(Math.abs(targetPieceLocation[0] - targetLocation[0]) === 2){
                 //Jumping move
                 let jumpPosition = [targetLocation[0] - (difference[0]/2), targetLocation[1] - (difference[1]/2)];
                 
-                console.log(jumpPosition);
+                console.log(`JUMP POSITION : ${jumpPosition}`);
                 if((grid[jumpPosition[0]][jumpPosition[1]] === 0) || (grid[jumpPosition[0]][jumpPosition[1]] % 2 === playerTurn)) turnValid = false;
                 else jumpTarget = jumpPosition;
             }
+            
 
             console.log(`V${turnValid} T${targetLocation} P${targetPieceLocation} G${gridPoint} GP${pieceGridPoint}`);
 
@@ -149,7 +267,10 @@ document.querySelector('.board').addEventListener('click', function(event) {
                 
                 grid[targetPieceLocation[0]][targetPieceLocation[1]] = 0;
                 if(!(jumpTarget === null)) grid[jumpTarget[0]][jumpTarget[1]] = 0;
+                movesThisTurn += 1;
+                
                 playerTurn = (playerTurn + 1) % 2;
+                movesThisTurn = 0;
                 DrawGrid(grid);
             }
         }
